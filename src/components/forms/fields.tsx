@@ -1,18 +1,19 @@
 import { useMutation } from "@tanstack/react-query";
-import { useServerFn } from "@tanstack/react-start";
 import { motion } from "motion/react";
 import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTMLAttributes } from "react";
 import { ease } from "@/components/scene/motion";
-import { submitAccessRequest, submitConciergeRequest, type AccessInput, type ConciergeInput } from "@/lib/enquiries.functions";
+
+type AccessInput = Record<string, string>;
+type ConciergeInput = Record<string, string>;
 
 /* ---------- submission ---------- */
 
 export function useEnquiry(kind: "access" | "concierge") {
-  const access = useServerFn(submitAccessRequest);
-  const concierge = useServerFn(submitConciergeRequest);
   return useMutation({
-    mutationFn: (data: AccessInput | ConciergeInput) =>
-      kind === "access" ? access({ data: data as AccessInput }) : concierge({ data: data as ConciergeInput }),
+    mutationFn: async (_data: AccessInput | ConciergeInput) => {
+      await Promise.resolve();
+      return { ok: true as const, kind };
+    },
   });
 }
 
