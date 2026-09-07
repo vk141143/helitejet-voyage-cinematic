@@ -36,6 +36,7 @@ type Props = {
   onStep: (step: number) => void;
   onOpenDistance: (requested?: Distance) => void;
   onShowOptions: () => void;
+  onVoiceModeChange?: (enabled: boolean) => void;
 };
 
 type Intent =
@@ -127,7 +128,7 @@ function chooseVoice() {
   return voices.find((voice) => /^en(-|_)/i.test(voice.lang) && /female|samantha|karen|victoria|serena|zira|ava/i.test(voice.name)) ?? voices.find((voice) => /^en(-|_)/i.test(voice.lang)) ?? voices[0];
 }
 
-export function VoiceConcierge({ step, stepCount, service, category, travellers, distance, budget, onService, onCategory, onTravellers, onStep, onOpenDistance, onShowOptions }: Props) {
+export function VoiceConcierge({ step, stepCount, service, category, travellers, distance, budget, onService, onCategory, onTravellers, onStep, onOpenDistance, onShowOptions, onVoiceModeChange }: Props) {
   const { reduced } = useCinematicMotion();
   const [decision, setDecision] = useState<"pending" | "enabled" | "declined">("pending");
   const [voiceState, setVoiceState] = useState<VoiceState>("idle");
@@ -141,6 +142,10 @@ export function VoiceConcierge({ step, stepCount, service, category, travellers,
     setDecision((window.localStorage.getItem("helitejet-voice-choice") as "enabled" | "declined" | null) ?? "pending");
     setSupported(!!getRecognitionConstructor() && "speechSynthesis" in window);
   }, []);
+
+  useEffect(() => {
+    onVoiceModeChange?.(decision === "enabled");
+  }, [decision, onVoiceModeChange]);
 
   useEffect(() => {
     if (typeof window !== "undefined" && "speechSynthesis" in window) window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
@@ -218,7 +223,7 @@ export function VoiceConcierge({ step, stepCount, service, category, travellers,
       case "SELECT_SERVICE":
         onService(intent.service);
         onStep(intent.service === "AVIATION" ? 1 : 1);
-        respond(intent.service === "AVIATION" ? "Certainly. Let's plan your private aviation journey. What type of aircraft would you prefer?" : `${intent.service[0]}${intent.service.slice(1).toLowerCase()}. Let's shape your request. How many travellers will be joining you?`, intent.service !== "AVIATION");
+        respond(`${intent.service[0]}${intent.service.slice(1).toLowerCase()}. Let's shape your request. How many travellers will be joining you?`, true);
         break;
       case "SELECT_AIRCRAFT":
         onCategory(intent.category);
@@ -228,7 +233,7 @@ export function VoiceConcierge({ step, stepCount, service, category, travellers,
       case "SET_TRAVELLERS":
         onTravellers(intent.count);
         onStep(Math.min(step + 1, stepCount - 1));
-        respond(`${intent.count} travellers. Understood. How far will you be travelling?`, true);
+        respond(`${intent.count} travellers. Understood. What is your preferred budget?`, true);
         break;
       case "OPEN_DISTANCE_DROPDOWN":
         onOpenDistance(intent.requestedDistance);
@@ -312,12 +317,14 @@ export function VoiceConcierge({ step, stepCount, service, category, travellers,
   const enable = () => {
     window.localStorage.setItem("helitejet-voice-choice", "enabled");
     setDecision("enabled");
+    onVoiceModeChange?.(true);
     respond("Hello. I'm your HELITEJET voice concierge. What are you looking for today: Aviation, Mobility, Yachts, Residences, Concierge, or Experiences?", true);
   };
 
   const decline = () => {
     window.localStorage.setItem("helitejet-voice-choice", "declined");
     setDecision("declined");
+    onVoiceModeChange?.(false);
   };
 
   return (

@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { brand, scenes } from "@/content/site";
 import { ease, useCinematicMotion } from "@/components/scene/motion";
-import { getAircraftCategoryOptions, matchAircraft, type AircraftCategory } from "./flightMatcher";
+import { matchAircraft, type AircraftCategory } from "./flightMatcher";
 import { inquiryConfig, type InquiryContext } from "./inquiryConfig";
 import { InquiryProgress } from "./InquiryProgress";
 import { InquiryStep } from "./InquiryStep";
@@ -18,12 +18,12 @@ function EmbeddedJourneyCard() {
   const [distance, setDistance] = useState("regional");
   const [budget, setBudget] = useState(30000);
   const [results, setResults] = useState(false);
+  const [voiceEnabled, setVoiceEnabled] = useState(false);
   const distanceRef = useRef<HTMLSelectElement>(null);
-  const categories = getAircraftCategoryOptions();
   const serviceOptions: Service[] = ["AVIATION", "MOBILITY", "YACHTS", "RESIDENCES", "CONCIERGE", "EXPERIENCES"];
   const isAviation = service === "AVIATION";
-  const stepLabels = isAviation ? ["TYPE", "AIRCRAFT", "PEOPLE", "WHERE", "BUDGET"] : ["TYPE", "PEOPLE", "WHERE", "BUDGET"];
-  const contentStep = isAviation ? step : step === 0 ? 0 : step - 1;
+  const stepLabels = ["TYPE", "PEOPLE", "BUDGET"];
+  const contentStep = step;
   const recommended = isAviation ? matchAircraft({ travellers, distanceId: distance, category }) : [];
   const hasCategoryFit = recommended.length > 0;
   const displayedBudget = `$${budget.toLocaleString()}`;
@@ -52,13 +52,9 @@ function EmbeddedJourneyCard() {
     ? "YOUR OPTIONS"
     : contentStep === 0
       ? "WHAT ARE YOU LOOKING FOR?"
-      : isAviation && contentStep === 1
-        ? "WHAT ARE YOU FLYING?"
-        : contentStep === (isAviation ? 2 : 1)
-          ? "HOW MANY TRAVELLERS?"
-          : contentStep === (isAviation ? 3 : 2)
-            ? "WHERE ARE YOU GOING?"
-            : "WHAT'S YOUR PREFERRED BUDGET?";
+      : contentStep === 1
+        ? "HOW MANY TRAVELLERS?"
+        : "WHAT'S YOUR PREFERRED BUDGET?";
 
   return (
     <motion.aside
@@ -88,10 +84,8 @@ function EmbeddedJourneyCard() {
 
               <div className="mt-7 flex flex-1 flex-col justify-start">
                 {contentStep === 0 && <div className="grid grid-cols-2 gap-2">{serviceOptions.map((option) => <button key={option} type="button" onClick={() => setService(option)} aria-pressed={service === option} className={`border px-3 py-3 text-left font-serif text-sm transition-colors ${service === option ? "border-champagne/80 bg-champagne/[0.08] text-ivory" : "border-ivory/10 text-ivory/55 hover:border-ivory/30 hover:text-ivory"}`}><span className="block">{option}</span><span className="mt-1 block text-[0.62rem] text-ivory/35">{option === "AVIATION" ? "Private Jets & Helicopters" : option === "MOBILITY" ? "Luxury Cars & Chauffeurs" : option === "YACHTS" ? "Yacht Charter & Marine Experiences" : option === "RESIDENCES" ? "Villas, Hotels & Private Stays" : option === "CONCIERGE" ? "Personal Assistance" : "Curated Moments & Lasting Memories"}</span></button>)}</div>}
-                {isAviation && contentStep === 1 && <div className="grid gap-2">{categories.map((option) => <button key={option.id} type="button" onClick={() => { setCategory(option.id); window.dispatchEvent(new CustomEvent("helitejet-aircraft-confirmed", { detail: { category: option.id } })); }} aria-pressed={category === option.id} className={`border px-3 py-2.5 text-left font-serif text-sm transition-colors ${category === option.id ? "border-champagne/80 bg-champagne/[0.08] text-ivory" : "border-ivory/10 text-ivory/55 hover:border-ivory/30 hover:text-ivory"}`}>{option.label}</button>)}</div>}
-                {contentStep === (isAviation ? 2 : 1) && <div className="flex items-center justify-center gap-8 pt-5"><button type="button" onClick={() => setTravellers((value) => Math.max(1, value - 1))} aria-label="Decrease travellers" className="flex h-10 w-10 items-center justify-center border border-ivory/20 text-xl text-ivory/70 transition-colors hover:border-champagne hover:text-champagne">−</button><span className="font-serif text-5xl font-light text-ivory">{travellers}</span><button type="button" onClick={() => setTravellers((value) => Math.min(50, value + 1))} aria-label="Increase travellers" className="flex h-10 w-10 items-center justify-center border border-ivory/20 text-xl text-ivory/70 transition-colors hover:border-champagne hover:text-champagne">+</button></div>}
-                {contentStep === (isAviation ? 3 : 2) && <label className="block"><span className="whisper text-ivory/50">ROUTE OR DISTANCE</span><select ref={distanceRef} value={distance} onChange={(event) => { setDistance(event.target.value); window.dispatchEvent(new Event("helitejet-distance-confirmed")); }} className="mt-3 w-full appearance-none border border-ivory/20 bg-obsidian px-4 py-3 font-serif text-base text-ivory outline-none transition-colors focus:border-champagne"><option value="short-hop">Short hop — Up to 150 mi</option><option value="regional">Regional — Up to 600 mi</option><option value="cross-country">Cross country — Up to 1,500 mi</option><option value="long-range">Long range — Up to 3,500 mi</option><option value="intercontinental">Intercontinental — 6,000 mi and beyond</option></select></label>}
-                {contentStep === (isAviation ? 4 : 3) && <div className="pt-3"><div className="text-center font-serif text-4xl font-light text-ivory">{displayedBudget}</div><input aria-label="Preferred budget" type="range" min="10000" max="150000" step="5000" value={budget} onChange={(event) => setBudget(Number(event.target.value))} onPointerUp={() => window.dispatchEvent(new CustomEvent("helitejet-budget-confirmed", { detail: { amount: budget } }))} onKeyUp={(event) => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") window.dispatchEvent(new CustomEvent("helitejet-budget-confirmed", { detail: { amount: budget } })); }} className="mt-10 h-1 w-full cursor-pointer appearance-none bg-[linear-gradient(90deg,oklch(0.72_0.1_80)_0%,oklch(0.72_0.1_80)_var(--progress),oklch(0.94_0.014_85/0.18)_var(--progress),oklch(0.94_0.014_85/0.18)_100%)] accent-champagne" style={{ ["--progress" as string]: `${((budget - 10000) / 140000) * 100}%` }} /><div className="mt-3 flex justify-between whisper text-ivory/35"><span>$10,000</span><span>$150,000</span></div><div className="mt-8 text-center whisper text-ivory/40">Preferred budget</div></div>}
+                {contentStep === 1 && <div className="flex items-center justify-center gap-8 pt-5"><button type="button" onClick={() => setTravellers((value) => Math.max(1, value - 1))} aria-label="Decrease travellers" className="flex h-10 w-10 items-center justify-center border border-ivory/20 text-xl text-ivory/70 transition-colors hover:border-champagne hover:text-champagne">−</button><span className="font-serif text-5xl font-light text-ivory">{travellers}</span><button type="button" onClick={() => setTravellers((value) => Math.min(50, value + 1))} aria-label="Increase travellers" className="flex h-10 w-10 items-center justify-center border border-ivory/20 text-xl text-ivory/70 transition-colors hover:border-champagne hover:text-champagne">+</button></div>}
+                {contentStep === 2 && <div className="pt-3"><div className="text-center font-serif text-4xl font-light text-ivory">{displayedBudget}</div><input aria-label="Preferred budget" type="range" min="10000" max="150000" step="5000" value={budget} onChange={(event) => setBudget(Number(event.target.value))} onPointerUp={() => window.dispatchEvent(new CustomEvent("helitejet-budget-confirmed", { detail: { amount: budget } }))} onKeyUp={(event) => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") window.dispatchEvent(new CustomEvent("helitejet-budget-confirmed", { detail: { amount: budget } })); }} className="mt-10 h-1 w-full cursor-pointer appearance-none bg-[linear-gradient(90deg,oklch(0.72_0.1_80)_0%,oklch(0.72_0.1_80)_var(--progress),oklch(0.94_0.014_85/0.18)_var(--progress),oklch(0.94_0.014_85/0.18)_100%)] accent-champagne" style={{ ["--progress" as string]: `${((budget - 10000) / 140000) * 100}%` }} /><div className="mt-3 flex justify-between whisper text-ivory/35"><span>$10,000</span><span>$150,000</span></div><div className="mt-8 text-center whisper text-ivory/40">Preferred budget</div></div>}
               </div>
             </motion.div>
           ) : (
@@ -105,10 +99,10 @@ function EmbeddedJourneyCard() {
         </AnimatePresence>
       </div>
 
-      <div className="flex items-center justify-between border-t border-ivory/10 pt-4">
+      {!voiceEnabled && <div className="flex items-center justify-between border-t border-ivory/10 pt-4">
         <button type="button" onClick={back} disabled={step === 0 && !results} className="whisper text-ivory/55 transition-colors hover:text-champagne disabled:invisible">← BACK</button>
         {!results && <button type="button" onClick={next} className="group inline-flex items-center gap-3 whisper text-champagne transition-colors hover:text-ivory"><span>{step === stepLabels.length - 1 ? "SHOW MY OPTIONS" : "NEXT"}</span><span className="relative block h-px w-10 overflow-hidden bg-gold/50"><span className="absolute inset-0 origin-left scale-x-0 bg-ivory transition-transform duration-500 group-hover:scale-x-100" /></span></button>}
-      </div>
+      </div>}
 
       <VoiceConcierge
         step={step}
@@ -124,6 +118,7 @@ function EmbeddedJourneyCard() {
         onStep={setStep}
         onOpenDistance={openDistance}
         onShowOptions={() => { if (step === stepLabels.length - 1) setResults(true); }}
+        onVoiceModeChange={setVoiceEnabled}
       />
     </motion.aside>
   );
