@@ -131,6 +131,7 @@ function chooseVoice() {
 export function VoiceConcierge({ step, stepCount, service, category, travellers, distance, budget, onService, onCategory, onTravellers, onStep, onOpenDistance, onShowOptions, onVoiceModeChange }: Props) {
   const { reduced } = useCinematicMotion();
   const [decision, setDecision] = useState<"pending" | "enabled" | "declined">("pending");
+  const [showPrompt, setShowPrompt] = useState(false);
   const [voiceState, setVoiceState] = useState<VoiceState>("idle");
   const [message, setMessage] = useState("Ask Concierge");
   const [supported, setSupported] = useState(true);
@@ -139,7 +140,7 @@ export function VoiceConcierge({ step, stepCount, service, category, travellers,
   const listenAfterSpeechRef = useRef(false);
 
   useEffect(() => {
-    setDecision((window.localStorage.getItem("helitejet-voice-choice") as "enabled" | "declined" | null) ?? "pending");
+    setDecision(window.localStorage.getItem("helitejet-voice-choice") === "declined" ? "declined" : "pending");
     setSupported(!!getRecognitionConstructor() && "speechSynthesis" in window);
   }, []);
 
@@ -158,7 +159,10 @@ export function VoiceConcierge({ step, stepCount, service, category, travellers,
   useEffect(() => {
     const activate = () => {
       if (decision === "enabled") listenRef.current();
-      else setDecision("pending");
+      else {
+        setDecision("pending");
+        setShowPrompt(true);
+      }
     };
     window.addEventListener("helitejet-voice-activate", activate);
     return () => window.removeEventListener("helitejet-voice-activate", activate);
@@ -324,13 +328,14 @@ export function VoiceConcierge({ step, stepCount, service, category, travellers,
   const decline = () => {
     window.localStorage.setItem("helitejet-voice-choice", "declined");
     setDecision("declined");
+    setShowPrompt(false);
     onVoiceModeChange?.(false);
   };
 
   return (
     <>
       <AnimatePresence>
-        {decision === "pending" && (
+        {decision === "pending" && showPrompt && (
           <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} transition={{ duration: 0.5, ease }} className="fixed bottom-6 left-6 z-[70] w-[260px] border border-ivory/15 bg-[oklch(0.09_0.008_275/0.94)] p-4 shadow-2xl backdrop-blur-md">
             <div className="whisper text-champagne">PRIVATE CONCIERGE</div>
             <div className="mt-3 font-serif text-lg font-light text-ivory">Would you like a private voice concierge?</div>
@@ -340,8 +345,12 @@ export function VoiceConcierge({ step, stepCount, service, category, travellers,
         )}
       </AnimatePresence>
 
-      {decision !== "pending" && (
-        <motion.div initial={reduced ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="fixed bottom-5 right-5 z-[65] flex items-center gap-3 border border-ivory/15 bg-[oklch(0.09_0.008_275/0.9)] px-3 py-2 shadow-xl backdrop-blur-md">
+      {decision === "pending" ? (
+        <motion.button type="button" initial={reduced ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} onClick={() => setShowPrompt(true)} className="fixed bottom-5 right-36 z-[65] border border-ivory/15 bg-[oklch(0.09_0.008_275/0.9)] px-3 py-2 whisper text-[0.58rem] text-ivory/70 shadow-xl backdrop-blur-md transition-colors hover:border-champagne hover:text-champagne sm:right-32">
+          VOICE CONCIERGE
+        </motion.button>
+      ) : (
+        <motion.div initial={reduced ? false : { opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="fixed bottom-5 right-36 z-[65] flex items-center gap-3 border border-ivory/15 bg-[oklch(0.09_0.008_275/0.9)] px-3 py-2 shadow-xl backdrop-blur-md sm:right-32">
           <button type="button" onClick={decision === "enabled" ? listen : () => setDecision("pending")} className="flex items-center gap-3 text-left outline-none"><span className={`h-2.5 w-2.5 rounded-full border border-champagne/70 ${voiceState === "listening" ? "animate-pulse bg-champagne" : voiceState === "speaking" ? "bg-champagne/60" : "bg-transparent"}`} /><span className="whisper text-[0.58rem] text-ivory/70">{supported ? (voiceState === "listening" ? "LISTENING..." : voiceState === "speaking" ? "SPEAKING..." : decision === "enabled" ? message : "VOICE CONCIERGE") : "VOICE UNAVAILABLE"}</span></button>
           {decision === "enabled" && <button type="button" onClick={() => { window.speechSynthesis.cancel(); recognitionRef.current?.abort(); setVoiceState("idle"); }} className="whisper text-ivory/35 hover:text-ivory" aria-label="Stop voice">×</button>}
         </motion.div>
