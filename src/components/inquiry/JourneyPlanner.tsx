@@ -3,7 +3,8 @@ import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { brand, scenes } from "@/content/site";
 import { ease, useCinematicMotion } from "@/components/scene/motion";
-import { matchAircraft, type AircraftCategory } from "./flightMatcher";
+import { aircraftInventory, type AircraftKind, type InventoryAircraft } from "./aircraftInventory";
+import { matchAircraft, type AircraftCategory, type AircraftMatch } from "./flightMatcher";
 import { inquiryConfig, type InquiryContext } from "./inquiryConfig";
 import { InquiryProgress } from "./InquiryProgress";
 import { InquiryStep } from "./InquiryStep";
@@ -13,6 +14,11 @@ function EmbeddedJourneyCard() {
   const { reduced } = useCinematicMotion();
   const [step, setStep] = useState(0);
   const [service, setService] = useState<Service | null>(null);
+  const [showAircraftPicker, setShowAircraftPicker] = useState(false);
+  const [aircraftKind, setAircraftKind] = useState<AircraftKind | null>(null);
+  const [aircraftQuery, setAircraftQuery] = useState("");
+  const [capacityFilter, setCapacityFilter] = useState("all");
+  const [selectedAircraft, setSelectedAircraft] = useState<InventoryAircraft | null>(null);
   const [category, setCategory] = useState<AircraftCategory>("Light Jet");
   const [travellers, setTravellers] = useState(4);
   const [distance, setDistance] = useState("regional");
@@ -31,6 +37,10 @@ function EmbeddedJourneyCard() {
 
   const next = () => {
     if (step === 0 && !service) return;
+    if (step === 0 && isAviation && !selectedAircraft) {
+      setShowAircraftPicker(true);
+      return;
+    }
     if (step < stepLabels.length - 1) setStep((value) => value + 1);
     else setResults(true);
   };
@@ -57,7 +67,8 @@ function EmbeddedJourneyCard() {
         : "WHAT'S YOUR PREFERRED BUDGET?";
 
   return (
-    <motion.aside
+    <>
+      <motion.aside
       role="region"
       aria-label="HELITEJET journey planner"
       initial={reduced ? false : { opacity: 0, y: 18 }}
@@ -83,7 +94,7 @@ function EmbeddedJourneyCard() {
               </div>
 
               <div className="mt-7 flex flex-1 flex-col justify-start">
-                {contentStep === 0 && <div className="grid grid-cols-2 gap-2">{serviceOptions.map((option) => <button key={option} type="button" onClick={() => setService(option)} aria-pressed={service === option} className={`border px-3 py-3 text-left font-serif text-sm transition-colors ${service === option ? "border-champagne/80 bg-champagne/[0.08] text-ivory" : "border-ivory/10 text-ivory/55 hover:border-ivory/30 hover:text-ivory"}`}><span className="block">{option}</span><span className="mt-1 block text-[0.62rem] text-ivory/35">{option === "AVIATION" ? "Private Jets & Helicopters" : option === "MOBILITY" ? "Luxury Cars & Chauffeurs" : option === "YACHTS" ? "Yacht Charter & Marine Experiences" : option === "RESIDENCES" ? "Villas, Hotels & Private Stays" : option === "CONCIERGE" ? "Personal Assistance" : "Curated Moments & Lasting Memories"}</span></button>)}</div>}
+                {contentStep === 0 && <div className="grid grid-cols-2 gap-2">{serviceOptions.map((option) => <button key={option} type="button" onClick={() => { setService(option); if (option === "AVIATION") setShowAircraftPicker(true); else { setAircraftKind(null); setSelectedAircraft(null); } }} aria-pressed={service === option} className={`border px-3 py-3 text-left font-serif text-sm transition-colors ${service === option ? "border-champagne/80 bg-champagne/[0.08] text-ivory" : "border-ivory/10 text-ivory/55 hover:border-ivory/30 hover:text-ivory"}`}><span className="block">{option}</span><span className="mt-1 block text-[0.62rem] text-ivory/35">{option === "AVIATION" ? "Private Jets & Helicopters" : option === "MOBILITY" ? "Luxury Cars & Chauffeurs" : option === "YACHTS" ? "Yacht Charter & Marine Experiences" : option === "RESIDENCES" ? "Villas, Hotels & Private Stays" : option === "CONCIERGE" ? "Personal Assistance" : "Curated Moments & Lasting Memories"}</span></button>)}</div>}
                 {contentStep === 1 && <div className="flex items-center justify-center gap-8 pt-5"><button type="button" onClick={() => setTravellers((value) => Math.max(1, value - 1))} aria-label="Decrease travellers" className="flex h-10 w-10 items-center justify-center border border-ivory/20 text-xl text-ivory/70 transition-colors hover:border-champagne hover:text-champagne">−</button><span className="font-serif text-5xl font-light text-ivory">{travellers}</span><button type="button" onClick={() => setTravellers((value) => Math.min(50, value + 1))} aria-label="Increase travellers" className="flex h-10 w-10 items-center justify-center border border-ivory/20 text-xl text-ivory/70 transition-colors hover:border-champagne hover:text-champagne">+</button></div>}
                 {contentStep === 2 && <div className="pt-3"><div className="text-center font-serif text-4xl font-light text-ivory">{displayedBudget}</div><input aria-label="Preferred budget" type="range" min="10000" max="150000" step="5000" value={budget} onChange={(event) => setBudget(Number(event.target.value))} onPointerUp={() => window.dispatchEvent(new CustomEvent("helitejet-budget-confirmed", { detail: { amount: budget } }))} onKeyUp={(event) => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") window.dispatchEvent(new CustomEvent("helitejet-budget-confirmed", { detail: { amount: budget } })); }} className="mt-10 h-1 w-full cursor-pointer appearance-none bg-[linear-gradient(90deg,oklch(0.72_0.1_80)_0%,oklch(0.72_0.1_80)_var(--progress),oklch(0.94_0.014_85/0.18)_var(--progress),oklch(0.94_0.014_85/0.18)_100%)] accent-champagne" style={{ ["--progress" as string]: `${((budget - 10000) / 140000) * 100}%` }} /><div className="mt-3 flex justify-between whisper text-ivory/35"><span>$10,000</span><span>$150,000</span></div><div className="mt-8 text-center whisper text-ivory/40">Preferred budget</div></div>}
               </div>
@@ -120,7 +131,20 @@ function EmbeddedJourneyCard() {
         onShowOptions={() => { if (step === stepLabels.length - 1) setResults(true); }}
         onVoiceModeChange={setVoiceEnabled}
       />
-    </motion.aside>
+      </motion.aside>
+
+      <AnimatePresence>
+        {showAircraftPicker && isAviation && (
+          <motion.div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowAircraftPicker(false)}>
+            <motion.div role="dialog" aria-modal="true" aria-label="Choose aircraft" className="w-full max-w-2xl border border-ivory/15 bg-[oklch(0.1_0.008_275)] p-5 shadow-[0_30px_120px_-40px_rgba(0,0,0,0.95)] md:p-7" initial={{ opacity: 0, y: 20, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.98 }} onClick={(event) => event.stopPropagation()}>
+              <div className="flex items-start justify-between gap-4 border-b border-ivory/10 pb-5"><div><div className="whisper text-champagne">AVIATION</div><h2 className="mt-2 font-serif text-3xl font-light text-ivory">Choose your aircraft</h2></div><button type="button" onClick={() => setShowAircraftPicker(false)} aria-label="Close aircraft picker" className="text-2xl text-ivory/50 hover:text-champagne">×</button></div>
+              <div className="mt-5 grid grid-cols-2 gap-2">{(["flight", "helicopter"] as AircraftKind[]).map((kind) => <button key={kind} type="button" onClick={() => { setAircraftKind(kind); setSelectedAircraft(null); }} className={`border px-4 py-3 text-left font-serif text-lg ${aircraftKind === kind ? "border-champagne bg-champagne/[0.08] text-ivory" : "border-ivory/15 text-ivory/60 hover:border-ivory/40"}`}>{kind === "flight" ? "Flight" : "Helicopter"}<span className="mt-1 block whisper text-ivory/35">{kind === "flight" ? "Fixed-wing aircraft" : "Rotorcraft"}</span></button>)}</div>
+              {aircraftKind && <><div className="mt-5 flex gap-2"><input autoFocus value={aircraftQuery} onChange={(event) => setAircraftQuery(event.target.value)} placeholder="Search model" aria-label="Search aircraft model" className="min-w-0 flex-1 border border-ivory/15 bg-transparent px-3 py-3 font-serif text-sm text-ivory outline-none placeholder:text-ivory/30 focus:border-champagne/70" /><select value={capacityFilter} onChange={(event) => setCapacityFilter(event.target.value)} aria-label="Filter seating capacity" className="border border-ivory/15 bg-obsidian px-3 whisper text-ivory/70 outline-none"><option value="all">All seats</option><option value="1-6">1-6 seats</option><option value="7-10">7-10 seats</option><option value="11+">11+ seats</option></select></div><div className="mt-4 max-h-72 space-y-2 overflow-y-auto pr-1">{aircraftInventory.filter((aircraft) => aircraft.kind === aircraftKind && aircraft.model.toLowerCase().includes(aircraftQuery.toLowerCase()) && (capacityFilter === "all" || (capacityFilter === "1-6" && !!aircraft.seats && aircraft.seats <= 6) || (capacityFilter === "7-10" && !!aircraft.seats && aircraft.seats >= 7 && aircraft.seats <= 10) || (capacityFilter === "11+" && !!aircraft.seats && aircraft.seats >= 11))).slice(0, 80).map((aircraft) => <button key={aircraft.id} type="button" onClick={() => { setSelectedAircraft(aircraft); setShowAircraftPicker(false); setStep(1); }} className="flex w-full items-center justify-between gap-3 border border-ivory/10 px-3 py-3 text-left transition-colors hover:border-champagne/70 hover:bg-champagne/[0.06]"><span className="font-serif text-base text-ivory">{aircraft.model}</span><span className="whisper text-ivory/50">{aircraft.capacity}</span></button>)}</div></>}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
@@ -141,6 +165,10 @@ export function JourneyPlanner({
   const [travellers, setTravellers] = useState<number | null>(context === "flights" ? 4 : 6);
   const [distance, setDistance] = useState<string | null>(context === "flights" ? "regional" : "coastal");
   const [budget, setBudget] = useState(25000);
+  const [aircraftKind, setAircraftKind] = useState<AircraftKind | null>(null);
+  const [aircraftQuery, setAircraftQuery] = useState("");
+  const [capacityFilter, setCapacityFilter] = useState("all");
+  const [selectedAircraft, setSelectedAircraft] = useState<InventoryAircraft | null>(null);
   const [showResults, setShowResults] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -204,11 +232,15 @@ export function JourneyPlanner({
       setTravellers(context === "flights" ? 4 : 6);
       setDistance(context === "flights" ? "regional" : "coastal");
       setBudget(25000);
+      setAircraftKind(null);
+      setAircraftQuery("");
+      setCapacityFilter("all");
+      setSelectedAircraft(null);
     }
   }, [open, context]);
 
   const currentStepMeta = config.steps[currentStep];
-  const canProceed = currentStep === 0 ? travellers !== null : currentStep === 1 ? distance !== null : true;
+  const canProceed = currentStepMeta.id === "aircraft" ? selectedAircraft !== null : currentStepMeta.id === "people" ? travellers !== null : currentStepMeta.id === "where" ? distance !== null : true;
 
   const flightResults =
     travellers && distance
@@ -218,9 +250,13 @@ export function JourneyPlanner({
         })
       : [];
 
-  const resultCards =
+  const selectedAircraftCard: AircraftMatch | null = selectedAircraft
+    ? { name: selectedAircraft.model, category: selectedAircraft.kind === "flight" ? "Fixed-wing aircraft" : "Rotorcraft", seats: selectedAircraft.capacity, range: "Inventory aircraft", cruise: "Concierge matched", mission: "Selected from the HELITEJET fleet inventory" }
+    : null;
+
+  const resultCards: AircraftMatch[] =
     context === "flights"
-      ? flightResults.slice(0, 4)
+      ? selectedAircraftCard ? [selectedAircraftCard] : flightResults.slice(0, 4)
       : [
           { name: "Harbour Collection", category: context === "yachts" ? "Explorer Yacht" : "Seaside Residence", seats: `${travellers ?? 4} guests`, range: distance ? config.distanceOptions.find((option) => option.id === distance)?.label ?? "Curated route" : "Curated route", cruise: "Private briefing", mission: context === "yachts" ? "Harbour-to-harbour charter with crew and tender" : "A stay designed for calm, privacy and daily rhythm" },
           { name: "Private Wing", category: context === "yachts" ? "Classic Yacht" : "City Residence", seats: `${travellers ?? 4} guests`, range: "Flex itinerary", cruise: "Concierge planning", mission: context === "yachts" ? "Elegant coastal passages and in-port access" : "A residence in the centre of your preferred rhythm" },
@@ -327,18 +363,53 @@ export function JourneyPlanner({
                           <h2 className="mt-4 max-w-md font-serif text-4xl font-light leading-tight text-ivory md:text-[3.3rem]">{currentStepMeta.title}</h2>
                         </div>
 
-                        <InquiryStep
-                          step={currentStepMeta}
-                          context={context}
-                          travellers={travellers}
-                          selectedDistance={distance}
-                          budget={budget}
-                          onTravellersChange={(value) => setTravellers(value)}
-                          onDistanceChange={(value) => setDistance(value)}
-                          onBudgetChange={(value) => setBudget(value)}
-                          peopleOptions={config.peopleOptions}
-                          distanceOptions={config.distanceOptions}
-                        />
+                        {currentStepMeta.id === "aircraft" ? (
+                          <div className="flex flex-1 flex-col gap-4">
+                            <div className="grid grid-cols-2 gap-2">
+                              {(["flight", "helicopter"] as AircraftKind[]).map((kind) => (
+                                <button key={kind} type="button" onClick={() => { setAircraftKind(kind); setSelectedAircraft(null); }} className={`border px-4 py-3 text-left font-serif text-lg transition-colors ${aircraftKind === kind ? "border-champagne bg-champagne/[0.08] text-ivory" : "border-ivory/15 text-ivory/60 hover:border-ivory/40 hover:text-ivory"}`}>
+                                  {kind === "flight" ? "Flight" : "Helicopter"}
+                                  <span className="mt-1 block whisper text-ivory/35">{kind === "flight" ? "Fixed-wing aircraft" : "Rotorcraft"}</span>
+                                </button>
+                              ))}
+                            </div>
+                            {aircraftKind && (
+                              <div className="flex min-h-0 flex-1 flex-col border border-ivory/10 bg-ivory/[0.02] p-3">
+                                <div className="flex flex-col gap-2 md:flex-row">
+                                  <input value={aircraftQuery} onChange={(event) => setAircraftQuery(event.target.value)} placeholder="Search model" aria-label="Search aircraft model" className="min-w-0 flex-1 border border-ivory/15 bg-transparent px-3 py-2 font-serif text-sm text-ivory outline-none placeholder:text-ivory/30 focus:border-champagne/70" />
+                                  <select value={capacityFilter} onChange={(event) => setCapacityFilter(event.target.value)} aria-label="Filter seating capacity" className="border border-ivory/15 bg-obsidian px-3 py-2 whisper text-ivory/70 outline-none focus:border-champagne/70">
+                                    <option value="all">All seats</option>
+                                    <option value="1-6">1-6 seats</option>
+                                    <option value="7-10">7-10 seats</option>
+                                    <option value="11+">11+ seats</option>
+                                  </select>
+                                </div>
+                                <div className="mt-3 min-h-0 flex-1 space-y-2 overflow-y-auto pr-1 [scrollbar-color:var(--color-gold)_transparent] [scrollbar-width:thin]">
+                                  {aircraftInventory.filter((aircraft) => aircraft.kind === aircraftKind && aircraft.model.toLowerCase().includes(aircraftQuery.toLowerCase()) && (capacityFilter === "all" || (capacityFilter === "1-6" && !!aircraft.seats && aircraft.seats <= 6) || (capacityFilter === "7-10" && !!aircraft.seats && aircraft.seats >= 7 && aircraft.seats <= 10) || (capacityFilter === "11+" && !!aircraft.seats && aircraft.seats >= 11))).slice(0, 80).map((aircraft) => (
+                                    <button key={aircraft.id} type="button" onClick={() => setSelectedAircraft(aircraft)} className={`flex w-full items-center justify-between gap-3 border px-3 py-2 text-left transition-colors ${selectedAircraft?.id === aircraft.id ? "border-champagne/80 bg-champagne/[0.08]" : "border-ivory/10 hover:border-ivory/35"}`}>
+                                      <span className="font-serif text-base text-ivory">{aircraft.model}</span>
+                                      <span className="whisper shrink-0 text-ivory/50">{aircraft.capacity}</span>
+                                    </button>
+                                  ))}
+                                </div>
+                                {selectedAircraft && <div className="mt-3 border-t border-ivory/10 pt-3 whisper text-champagne">SELECTED: {selectedAircraft.model}</div>}
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <InquiryStep
+                            step={currentStepMeta}
+                            context={context}
+                            travellers={travellers}
+                            selectedDistance={distance}
+                            budget={budget}
+                            onTravellersChange={(value) => setTravellers(value)}
+                            onDistanceChange={(value) => setDistance(value)}
+                            onBudgetChange={(value) => setBudget(value)}
+                            peopleOptions={config.peopleOptions}
+                            distanceOptions={config.distanceOptions}
+                          />
+                        )}
                       </motion.div>
                     ) : (
                       <motion.div

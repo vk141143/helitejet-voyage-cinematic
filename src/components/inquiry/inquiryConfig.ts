@@ -9,7 +9,7 @@ export type DistanceOption = {
 };
 
 export type InquiryStep = {
-  id: "people" | "where" | "budget";
+  id: "aircraft" | "people" | "where" | "budget";
   label: string;
   title: string;
   helper?: string;
@@ -30,6 +30,7 @@ export const inquiryConfig = {
     resultTitle: "YOUR JOURNEY",
     resultSummary: "Based on your requirements, we've selected a collection of aircraft suited to your journey.",
     steps: [
+      { id: "aircraft", label: "Aircraft", title: "Flight or helicopter?" },
       { id: "people", label: "People", title: "How many travellers?" },
       { id: "where", label: "Where", title: "Where are you going?" },
       { id: "budget", label: "Budget", title: "What would you like to invest in this journey?" },
