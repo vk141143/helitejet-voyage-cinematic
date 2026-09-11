@@ -68,6 +68,7 @@ export type WorldPath =
   | "/experiences"
   | "/destinations"
   | "/membership"
+  | "/subscriptions"
   | "/private"
   | "/concierge"
   | "/about"
@@ -95,10 +96,11 @@ export const menu: { to: WorldPath; label: string; image: SceneKey; numeral: str
   { to: "/experiences", label: "Experiences", image: "experiences", numeral: "06" },
   { to: "/destinations", label: "Destinations", image: "destinations", numeral: "07" },
   { to: "/membership", label: "Membership", image: "membership", numeral: "08" },
-  { to: "/private", label: "HELITEJET Private", image: "private", numeral: "09" },
-  { to: "/concierge", label: "Concierge", image: "concierge", numeral: "10" },
-  { to: "/about", label: "About", image: "about", numeral: "11" },
-  { to: "/request-access", label: "Request Access", image: "access", numeral: "12" },
+  { to: "/subscriptions", label: "Subscriptions", image: "membership", numeral: "09" },
+  { to: "/private", label: "HELITEJET Private", image: "private", numeral: "10" },
+  { to: "/concierge", label: "Concierge", image: "concierge", numeral: "11" },
+  { to: "/about", label: "About", image: "about", numeral: "12" },
+  { to: "/request-access", label: "Request Access", image: "access", numeral: "13" },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -330,6 +332,19 @@ export const worlds = {
     },
     opening: { eyebrow: "Chapter Eight", headline: "Membership", sub: "A circle, not a client list." },
     passage: "We would rather know three hundred people well than three thousand by name.",
+    next: { to: "/subscriptions", name: "Subscriptions", image: "membership" },
+  },
+
+  subscriptions: {
+    key: "membership",
+    path: "/subscriptions",
+    name: "Subscriptions",
+    seo: {
+      title: "Subscriptions — HELITEJET",
+      description: "Three HELITEJET subscription clubs, each designed for a different pace of life and access level.",
+    },
+    opening: { eyebrow: "Club Access", headline: "Subscriptions", sub: "Three clubs. One standard." },
+    passage: "The right club is the one that gives you access before you know you need it.",
     next: { to: "/private", name: "HELITEJET Private", image: "private" },
   },
 
@@ -517,6 +532,35 @@ export const membershipContent = {
     { name: "HELITEJET Private", body: "Guaranteed aircraft, permanent crew and residence, and a desk that never closes. Forty seats. By invitation after a year in the circle.", to: "/private" as WorldPath },
   ],
   cta: { label: "Request access", to: "/request-access" as WorldPath },
+};
+
+export const subscriptionContent = {
+  intro: {
+    kicker: "The Clubs",
+    title: "Three access levels.\nOne unbroken standard.",
+    body: "Each club is designed for a different pace of life. The common thread is the same: a single desk, discreet coordination, and access without friction.",
+  },
+  clubs: [
+    {
+      name: "The Horizon Club",
+      tag: "01 · Essential access",
+      blurb: "For members who want rapid, assured access across aviation, mobility and destinations without a full estate portfolio.",
+      perks: ["Priority aircraft planning", "Dedicated travel desk", "Preferred destination introductions", "Seasonal concierge scheduling"],
+    },
+    {
+      name: "The Reserve Club",
+      tag: "02 · Private reserve",
+      blurb: "For households that move more often and want stronger preference across jets, yachts and personal logistics.",
+      perks: ["Guaranteed aircraft preference", "Cabin and crew continuity", "Expanded yacht and residence support", "Expanded executive mobility roster"],
+    },
+    {
+      name: "The House Club",
+      tag: "03 · Full residence",
+      blurb: "For members who require complete continuity across homes, tails, charter fleets, and multi-destination living.",
+      perks: ["Residence planning and staffing", "Private fleet and fleet continuity", "Custom experiences and seasonal programming", "Family office level coordination"],
+    },
+  ],
+  cta: { label: "Begin your application", to: "/request-access" as WorldPath },
 };
 
 export const privateContent = {

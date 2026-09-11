@@ -20,6 +20,7 @@ import { Route as MobilityRouteImport } from './routes/mobility'
 import { Route as PrivateRouteImport } from './routes/private'
 import { Route as RequestAccessRouteImport } from './routes/request-access'
 import { Route as ResidencesRouteImport } from './routes/residences'
+import { Route as SubscriptionsRouteImport } from './routes/subscriptions'
 import { Route as YachtsRouteImport } from './routes/yachts'
 
 const IndexRoute = IndexRouteImport.update({
@@ -77,6 +78,11 @@ const ResidencesRoute = ResidencesRouteImport.update({
   path: '/residences',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SubscriptionsRoute = SubscriptionsRouteImport.update({
+  id: '/subscriptions',
+  path: '/subscriptions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const YachtsRoute = YachtsRouteImport.update({
   id: '/yachts',
   path: '/yachts',
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/private': typeof PrivateRoute
   '/request-access': typeof RequestAccessRoute
   '/residences': typeof ResidencesRoute
+  '/subscriptions': typeof SubscriptionsRoute
   '/yachts': typeof YachtsRoute
 }
 export interface FileRoutesByTo {
@@ -109,6 +116,7 @@ export interface FileRoutesByTo {
   '/private': typeof PrivateRoute
   '/request-access': typeof RequestAccessRoute
   '/residences': typeof ResidencesRoute
+  '/subscriptions': typeof SubscriptionsRoute
   '/yachts': typeof YachtsRoute
 }
 export interface FileRoutesById {
@@ -124,6 +132,7 @@ export interface FileRoutesById {
   '/private': typeof PrivateRoute
   '/request-access': typeof RequestAccessRoute
   '/residences': typeof ResidencesRoute
+  '/subscriptions': typeof SubscriptionsRoute
   '/yachts': typeof YachtsRoute
 }
 export interface FileRouteTypes {
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/private'
     | '/request-access'
     | '/residences'
+    | '/subscriptions'
     | '/yachts'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -154,6 +164,7 @@ export interface FileRouteTypes {
     | '/private'
     | '/request-access'
     | '/residences'
+    | '/subscriptions'
     | '/yachts'
   id:
     | '__root__'
@@ -168,6 +179,7 @@ export interface FileRouteTypes {
     | '/private'
     | '/request-access'
     | '/residences'
+    | '/subscriptions'
     | '/yachts'
   fileRoutesById: FileRoutesById
 }
@@ -183,6 +195,7 @@ export interface RootRouteChildren {
   PrivateRoute: typeof PrivateRoute
   RequestAccessRoute: typeof RequestAccessRoute
   ResidencesRoute: typeof ResidencesRoute
+  SubscriptionsRoute: typeof SubscriptionsRoute
   YachtsRoute: typeof YachtsRoute
 }
 
@@ -265,6 +278,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResidencesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/subscriptions': {
+      id: '/subscriptions'
+      path: '/subscriptions'
+      fullPath: '/subscriptions'
+      preLoaderRoute: typeof SubscriptionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/yachts': {
       id: '/yachts'
       path: '/yachts'
@@ -287,6 +307,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivateRoute: PrivateRoute,
   RequestAccessRoute: RequestAccessRoute,
   ResidencesRoute: ResidencesRoute,
+  SubscriptionsRoute: SubscriptionsRoute,
   YachtsRoute: YachtsRoute,
 }
 export const routeTree = rootRouteImport

@@ -14,6 +14,7 @@ import {
   privateContent,
   residencesContent,
   scenes,
+  subscriptionContent,
   yachtsContent,
   type WorldPath,
 } from "@/content/site";
@@ -317,6 +318,53 @@ export function MembershipSections() {
           ))}
         </div>
         <CTA {...c.cta} className="mt-20" />
+      </section>
+    </>
+  );
+}
+
+/* ---------- Subscriptions ---------- */
+
+export function SubscriptionsSections() {
+  const c = subscriptionContent;
+  return (
+    <>
+      <Split imageKey="membership">
+        <Editorial {...c.intro} />
+      </Split>
+
+      <section className="px-7 py-[10vh] md:px-[7vw]">
+        <div className="grid gap-8 md:grid-cols-3 md:gap-6">
+          {c.clubs.map((club, i) => (
+            <SectionReveal key={club.name} delay={i * 0.12} className="group border border-ivory/10 bg-[oklch(0.12_0.008_275/0.8)] p-6 md:p-8">
+              <span className="whisper text-champagne/80">{club.tag}</span>
+              <h3 className="mt-8 font-serif text-4xl font-light leading-tight text-ivory md:text-[2.5rem]">{club.name}</h3>
+              <p className="mt-6 font-serif text-lg font-light leading-relaxed text-ivory/70">{club.blurb}</p>
+              <ul className="mt-8 space-y-3">
+                {club.perks.map((perk) => (
+                  <li key={perk} className="flex items-start gap-3 text-ivory/65">
+                    <span className="mt-2 h-1.5 w-1.5 rounded-full bg-gold" aria-hidden="true" />
+                    <span className="font-serif text-lg font-light leading-relaxed">{perk}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-10 border-t border-ivory/10 pt-6">
+                <Link to="/request-access" className="group inline-flex items-center gap-4 whisper text-champagne transition-colors hover:text-ivory">
+                  <span>Apply</span>
+                  <span className="relative block h-px w-10 overflow-hidden bg-gold/50">
+                    <span className="absolute inset-0 origin-left scale-x-0 bg-ivory transition-transform duration-700 ease-out group-hover:scale-x-100" />
+                  </span>
+                </Link>
+              </div>
+            </SectionReveal>
+          ))}
+        </div>
+      </section>
+
+      <section className="px-7 pb-[10vh] md:px-[7vw]">
+        <Editorial kicker="The Standard" title="A private desk,
+not a sales funnel." body="Every club is backed by the same team, the same discretion, and the same resort-like certainty that the right answer arrives before urgency becomes noise." />
+        <CTA {...c.cta} className="mt-12" />
       </section>
     </>
   );
