@@ -17,4 +17,9 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  nitro: {
+    // Force the Nitro build to target Netlify so the generated output matches
+    // the deployment publish path expected by Netlify.
+    preset: "netlify",
+  },
 });
