@@ -583,6 +583,15 @@ export const aboutContent = {
   cta: { label: "Begin a conversation", to: "/request-access" as WorldPath },
 };
 
+export const requestServices = [
+  { key: "AVIATION", label: "Aviation", description: "Private Jets & Helicopters", image: "aviation" as SceneKey },
+  { key: "YACHTS", label: "Yachts", description: "Yacht Charter & Marine Experiences", image: "yachts" as SceneKey },
+  { key: "MOBILITY", label: "Mobility", description: "Luxury Cars & Chauffeurs", image: "mobility" as SceneKey },
+  { key: "RESIDENCES", label: "Residences", description: "Villas, Hotels & Private Stays", image: "residences" as SceneKey },
+  { key: "EXPERIENCES", label: "Experiences", description: "Curated Moments & Lasting Memories", image: "experiences" as SceneKey },
+  { key: "CONCIERGE", label: "Concierge", description: "Personal Assistance", image: "concierge" as SceneKey },
+] as const;
+
 export const interestOptions = [
   "Private Aviation",
   "Yachts",

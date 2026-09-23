@@ -15,13 +15,58 @@ import { Route as AviationRouteImport } from './routes/aviation'
 import { Route as ConciergeRouteImport } from './routes/concierge'
 import { Route as DestinationsRouteImport } from './routes/destinations'
 import { Route as ExperiencesRouteImport } from './routes/experiences'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as MobilityRouteImport } from './routes/mobility'
 import { Route as PrivateRouteImport } from './routes/private'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as RequestAccessRouteImport } from './routes/request-access'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ResidencesRouteImport } from './routes/residences'
 import { Route as SubscriptionsRouteImport } from './routes/subscriptions'
 import { Route as YachtsRouteImport } from './routes/yachts'
+import { Route as AdminAircraftRouteImport } from './routes/admin.aircraft'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as AdminAuditRouteImport } from './routes/admin.audit'
+import { Route as AdminBookingsRouteImport } from './routes/admin.bookings'
+import { Route as AdminContentRouteImport } from './routes/admin.content'
+import { Route as AdminCustomersRouteImport } from './routes/admin.customers'
+import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminNotificationsRouteImport } from './routes/admin.notifications'
+import { Route as AdminOperatorsRouteImport } from './routes/admin.operators'
+import { Route as AdminPricingRouteImport } from './routes/admin.pricing'
+import { Route as AdminQuotesRouteImport } from './routes/admin.quotes'
+import { Route as AdminRequestsRouteImport } from './routes/admin.requests'
+import { Route as AdminSalesTeamRouteImport } from './routes/admin.sales-team'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminSupportRouteImport } from './routes/admin.support'
+import { Route as AdminVoiceRouteImport } from './routes/admin.voice'
+import { Route as AdminYachtsRouteImport } from './routes/admin.yachts'
+import { Route as CustomerBookingsRouteImport } from './routes/customer.bookings'
+import { Route as CustomerDashboardRouteImport } from './routes/customer.dashboard'
+import { Route as CustomerDocumentsRouteImport } from './routes/customer.documents'
+import { Route as CustomerEventsRouteImport } from './routes/customer.events'
+import { Route as CustomerNotificationsRouteImport } from './routes/customer.notifications'
+import { Route as CustomerProfileRouteImport } from './routes/customer.profile'
+import { Route as CustomerQuotesRouteImport } from './routes/customer.quotes'
+import { Route as CustomerRequestsRouteImport } from './routes/customer.requests'
+import { Route as CustomerSubscriptionsRouteImport } from './routes/customer.subscriptions'
+import { Route as CustomerSupportRouteImport } from './routes/customer.support'
+import { Route as SalesAviationRouteImport } from './routes/sales.aviation'
+import { Route as SalesBookingsRouteImport } from './routes/sales.bookings'
+import { Route as SalesCustomersRouteImport } from './routes/sales.customers'
+import { Route as SalesDashboardRouteImport } from './routes/sales.dashboard'
+import { Route as SalesDocumentsRouteImport } from './routes/sales.documents'
+import { Route as SalesFollowupsRouteImport } from './routes/sales.followups'
+import { Route as SalesMessagesRouteImport } from './routes/sales.messages'
+import { Route as SalesMyRequestsRouteImport } from './routes/sales.my-requests'
+import { Route as SalesProfileRouteImport } from './routes/sales.profile'
+import { Route as SalesQuotesRouteImport } from './routes/sales.quotes'
+import { Route as SalesRequestsRouteImport } from './routes/sales.requests'
+import { Route as SalesSupportRouteImport } from './routes/sales.support'
+import { Route as SalesYachtsRouteImport } from './routes/sales.yachts'
+import { Route as CustomerRequestsNewRouteImport } from './routes/customer.requests.new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -53,6 +98,16 @@ const ExperiencesRoute = ExperiencesRouteImport.update({
   path: '/experiences',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MembershipRoute = MembershipRouteImport.update({
   id: '/membership',
   path: '/membership',
@@ -68,9 +123,19 @@ const PrivateRoute = PrivateRouteImport.update({
   path: '/private',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RequestAccessRoute = RequestAccessRouteImport.update({
   id: '/request-access',
   path: '/request-access',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResidencesRoute = ResidencesRouteImport.update({
@@ -88,6 +153,211 @@ const YachtsRoute = YachtsRouteImport.update({
   path: '/yachts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminAircraftRoute = AdminAircraftRouteImport.update({
+  id: '/admin/aircraft',
+  path: '/admin/aircraft',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/admin/analytics',
+  path: '/admin/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAuditRoute = AdminAuditRouteImport.update({
+  id: '/admin/audit',
+  path: '/admin/audit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminBookingsRoute = AdminBookingsRouteImport.update({
+  id: '/admin/bookings',
+  path: '/admin/bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminContentRoute = AdminContentRouteImport.update({
+  id: '/admin/content',
+  path: '/admin/content',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminCustomersRoute = AdminCustomersRouteImport.update({
+  id: '/admin/customers',
+  path: '/admin/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminNotificationsRoute = AdminNotificationsRouteImport.update({
+  id: '/admin/notifications',
+  path: '/admin/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminOperatorsRoute = AdminOperatorsRouteImport.update({
+  id: '/admin/operators',
+  path: '/admin/operators',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminPricingRoute = AdminPricingRouteImport.update({
+  id: '/admin/pricing',
+  path: '/admin/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminQuotesRoute = AdminQuotesRouteImport.update({
+  id: '/admin/quotes',
+  path: '/admin/quotes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRequestsRoute = AdminRequestsRouteImport.update({
+  id: '/admin/requests',
+  path: '/admin/requests',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSalesTeamRoute = AdminSalesTeamRouteImport.update({
+  id: '/admin/sales-team',
+  path: '/admin/sales-team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/admin/settings',
+  path: '/admin/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSupportRoute = AdminSupportRouteImport.update({
+  id: '/admin/support',
+  path: '/admin/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminVoiceRoute = AdminVoiceRouteImport.update({
+  id: '/admin/voice',
+  path: '/admin/voice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminYachtsRoute = AdminYachtsRouteImport.update({
+  id: '/admin/yachts',
+  path: '/admin/yachts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerBookingsRoute = CustomerBookingsRouteImport.update({
+  id: '/customer/bookings',
+  path: '/customer/bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerDashboardRoute = CustomerDashboardRouteImport.update({
+  id: '/customer/dashboard',
+  path: '/customer/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerDocumentsRoute = CustomerDocumentsRouteImport.update({
+  id: '/customer/documents',
+  path: '/customer/documents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerEventsRoute = CustomerEventsRouteImport.update({
+  id: '/customer/events',
+  path: '/customer/events',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerNotificationsRoute = CustomerNotificationsRouteImport.update({
+  id: '/customer/notifications',
+  path: '/customer/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerProfileRoute = CustomerProfileRouteImport.update({
+  id: '/customer/profile',
+  path: '/customer/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerQuotesRoute = CustomerQuotesRouteImport.update({
+  id: '/customer/quotes',
+  path: '/customer/quotes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerRequestsRoute = CustomerRequestsRouteImport.update({
+  id: '/customer/requests',
+  path: '/customer/requests',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerSubscriptionsRoute = CustomerSubscriptionsRouteImport.update({
+  id: '/customer/subscriptions',
+  path: '/customer/subscriptions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerSupportRoute = CustomerSupportRouteImport.update({
+  id: '/customer/support',
+  path: '/customer/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesAviationRoute = SalesAviationRouteImport.update({
+  id: '/sales/aviation',
+  path: '/sales/aviation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesBookingsRoute = SalesBookingsRouteImport.update({
+  id: '/sales/bookings',
+  path: '/sales/bookings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesCustomersRoute = SalesCustomersRouteImport.update({
+  id: '/sales/customers',
+  path: '/sales/customers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesDashboardRoute = SalesDashboardRouteImport.update({
+  id: '/sales/dashboard',
+  path: '/sales/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesDocumentsRoute = SalesDocumentsRouteImport.update({
+  id: '/sales/documents',
+  path: '/sales/documents',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesFollowupsRoute = SalesFollowupsRouteImport.update({
+  id: '/sales/followups',
+  path: '/sales/followups',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesMessagesRoute = SalesMessagesRouteImport.update({
+  id: '/sales/messages',
+  path: '/sales/messages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesMyRequestsRoute = SalesMyRequestsRouteImport.update({
+  id: '/sales/my-requests',
+  path: '/sales/my-requests',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesProfileRoute = SalesProfileRouteImport.update({
+  id: '/sales/profile',
+  path: '/sales/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesQuotesRoute = SalesQuotesRouteImport.update({
+  id: '/sales/quotes',
+  path: '/sales/quotes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesRequestsRoute = SalesRequestsRouteImport.update({
+  id: '/sales/requests',
+  path: '/sales/requests',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesSupportRoute = SalesSupportRouteImport.update({
+  id: '/sales/support',
+  path: '/sales/support',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalesYachtsRoute = SalesYachtsRouteImport.update({
+  id: '/sales/yachts',
+  path: '/sales/yachts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CustomerRequestsNewRoute = CustomerRequestsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => CustomerRequestsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -96,13 +366,58 @@ export interface FileRoutesByFullPath {
   '/concierge': typeof ConciergeRoute
   '/destinations': typeof DestinationsRoute
   '/experiences': typeof ExperiencesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/mobility': typeof MobilityRoute
   '/private': typeof PrivateRoute
+  '/register': typeof RegisterRoute
   '/request-access': typeof RequestAccessRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/residences': typeof ResidencesRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/yachts': typeof YachtsRoute
+  '/admin/aircraft': typeof AdminAircraftRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/content': typeof AdminContentRoute
+  '/admin/customers': typeof AdminCustomersRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/operators': typeof AdminOperatorsRoute
+  '/admin/pricing': typeof AdminPricingRoute
+  '/admin/quotes': typeof AdminQuotesRoute
+  '/admin/requests': typeof AdminRequestsRoute
+  '/admin/sales-team': typeof AdminSalesTeamRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/voice': typeof AdminVoiceRoute
+  '/admin/yachts': typeof AdminYachtsRoute
+  '/customer/bookings': typeof CustomerBookingsRoute
+  '/customer/dashboard': typeof CustomerDashboardRoute
+  '/customer/documents': typeof CustomerDocumentsRoute
+  '/customer/events': typeof CustomerEventsRoute
+  '/customer/notifications': typeof CustomerNotificationsRoute
+  '/customer/profile': typeof CustomerProfileRoute
+  '/customer/quotes': typeof CustomerQuotesRoute
+  '/customer/requests': typeof CustomerRequestsRouteWithChildren
+  '/customer/subscriptions': typeof CustomerSubscriptionsRoute
+  '/customer/support': typeof CustomerSupportRoute
+  '/sales/aviation': typeof SalesAviationRoute
+  '/sales/bookings': typeof SalesBookingsRoute
+  '/sales/customers': typeof SalesCustomersRoute
+  '/sales/dashboard': typeof SalesDashboardRoute
+  '/sales/documents': typeof SalesDocumentsRoute
+  '/sales/followups': typeof SalesFollowupsRoute
+  '/sales/messages': typeof SalesMessagesRoute
+  '/sales/my-requests': typeof SalesMyRequestsRoute
+  '/sales/profile': typeof SalesProfileRoute
+  '/sales/quotes': typeof SalesQuotesRoute
+  '/sales/requests': typeof SalesRequestsRoute
+  '/sales/support': typeof SalesSupportRoute
+  '/sales/yachts': typeof SalesYachtsRoute
+  '/customer/requests/new': typeof CustomerRequestsNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -111,13 +426,58 @@ export interface FileRoutesByTo {
   '/concierge': typeof ConciergeRoute
   '/destinations': typeof DestinationsRoute
   '/experiences': typeof ExperiencesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/mobility': typeof MobilityRoute
   '/private': typeof PrivateRoute
+  '/register': typeof RegisterRoute
   '/request-access': typeof RequestAccessRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/residences': typeof ResidencesRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/yachts': typeof YachtsRoute
+  '/admin/aircraft': typeof AdminAircraftRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/content': typeof AdminContentRoute
+  '/admin/customers': typeof AdminCustomersRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/operators': typeof AdminOperatorsRoute
+  '/admin/pricing': typeof AdminPricingRoute
+  '/admin/quotes': typeof AdminQuotesRoute
+  '/admin/requests': typeof AdminRequestsRoute
+  '/admin/sales-team': typeof AdminSalesTeamRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/voice': typeof AdminVoiceRoute
+  '/admin/yachts': typeof AdminYachtsRoute
+  '/customer/bookings': typeof CustomerBookingsRoute
+  '/customer/dashboard': typeof CustomerDashboardRoute
+  '/customer/documents': typeof CustomerDocumentsRoute
+  '/customer/events': typeof CustomerEventsRoute
+  '/customer/notifications': typeof CustomerNotificationsRoute
+  '/customer/profile': typeof CustomerProfileRoute
+  '/customer/quotes': typeof CustomerQuotesRoute
+  '/customer/requests': typeof CustomerRequestsRouteWithChildren
+  '/customer/subscriptions': typeof CustomerSubscriptionsRoute
+  '/customer/support': typeof CustomerSupportRoute
+  '/sales/aviation': typeof SalesAviationRoute
+  '/sales/bookings': typeof SalesBookingsRoute
+  '/sales/customers': typeof SalesCustomersRoute
+  '/sales/dashboard': typeof SalesDashboardRoute
+  '/sales/documents': typeof SalesDocumentsRoute
+  '/sales/followups': typeof SalesFollowupsRoute
+  '/sales/messages': typeof SalesMessagesRoute
+  '/sales/my-requests': typeof SalesMyRequestsRoute
+  '/sales/profile': typeof SalesProfileRoute
+  '/sales/quotes': typeof SalesQuotesRoute
+  '/sales/requests': typeof SalesRequestsRoute
+  '/sales/support': typeof SalesSupportRoute
+  '/sales/yachts': typeof SalesYachtsRoute
+  '/customer/requests/new': typeof CustomerRequestsNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -127,13 +487,58 @@ export interface FileRoutesById {
   '/concierge': typeof ConciergeRoute
   '/destinations': typeof DestinationsRoute
   '/experiences': typeof ExperiencesRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/mobility': typeof MobilityRoute
   '/private': typeof PrivateRoute
+  '/register': typeof RegisterRoute
   '/request-access': typeof RequestAccessRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/residences': typeof ResidencesRoute
   '/subscriptions': typeof SubscriptionsRoute
   '/yachts': typeof YachtsRoute
+  '/admin/aircraft': typeof AdminAircraftRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/audit': typeof AdminAuditRoute
+  '/admin/bookings': typeof AdminBookingsRoute
+  '/admin/content': typeof AdminContentRoute
+  '/admin/customers': typeof AdminCustomersRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/notifications': typeof AdminNotificationsRoute
+  '/admin/operators': typeof AdminOperatorsRoute
+  '/admin/pricing': typeof AdminPricingRoute
+  '/admin/quotes': typeof AdminQuotesRoute
+  '/admin/requests': typeof AdminRequestsRoute
+  '/admin/sales-team': typeof AdminSalesTeamRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/admin/support': typeof AdminSupportRoute
+  '/admin/voice': typeof AdminVoiceRoute
+  '/admin/yachts': typeof AdminYachtsRoute
+  '/customer/bookings': typeof CustomerBookingsRoute
+  '/customer/dashboard': typeof CustomerDashboardRoute
+  '/customer/documents': typeof CustomerDocumentsRoute
+  '/customer/events': typeof CustomerEventsRoute
+  '/customer/notifications': typeof CustomerNotificationsRoute
+  '/customer/profile': typeof CustomerProfileRoute
+  '/customer/quotes': typeof CustomerQuotesRoute
+  '/customer/requests': typeof CustomerRequestsRouteWithChildren
+  '/customer/subscriptions': typeof CustomerSubscriptionsRoute
+  '/customer/support': typeof CustomerSupportRoute
+  '/sales/aviation': typeof SalesAviationRoute
+  '/sales/bookings': typeof SalesBookingsRoute
+  '/sales/customers': typeof SalesCustomersRoute
+  '/sales/dashboard': typeof SalesDashboardRoute
+  '/sales/documents': typeof SalesDocumentsRoute
+  '/sales/followups': typeof SalesFollowupsRoute
+  '/sales/messages': typeof SalesMessagesRoute
+  '/sales/my-requests': typeof SalesMyRequestsRoute
+  '/sales/profile': typeof SalesProfileRoute
+  '/sales/quotes': typeof SalesQuotesRoute
+  '/sales/requests': typeof SalesRequestsRoute
+  '/sales/support': typeof SalesSupportRoute
+  '/sales/yachts': typeof SalesYachtsRoute
+  '/customer/requests/new': typeof CustomerRequestsNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -144,13 +549,58 @@ export interface FileRouteTypes {
     | '/concierge'
     | '/destinations'
     | '/experiences'
+    | '/forgot-password'
+    | '/login'
     | '/membership'
     | '/mobility'
     | '/private'
+    | '/register'
     | '/request-access'
+    | '/reset-password'
     | '/residences'
     | '/subscriptions'
     | '/yachts'
+    | '/admin/aircraft'
+    | '/admin/analytics'
+    | '/admin/audit'
+    | '/admin/bookings'
+    | '/admin/content'
+    | '/admin/customers'
+    | '/admin/dashboard'
+    | '/admin/notifications'
+    | '/admin/operators'
+    | '/admin/pricing'
+    | '/admin/quotes'
+    | '/admin/requests'
+    | '/admin/sales-team'
+    | '/admin/settings'
+    | '/admin/support'
+    | '/admin/voice'
+    | '/admin/yachts'
+    | '/customer/bookings'
+    | '/customer/dashboard'
+    | '/customer/documents'
+    | '/customer/events'
+    | '/customer/notifications'
+    | '/customer/profile'
+    | '/customer/quotes'
+    | '/customer/requests'
+    | '/customer/subscriptions'
+    | '/customer/support'
+    | '/sales/aviation'
+    | '/sales/bookings'
+    | '/sales/customers'
+    | '/sales/dashboard'
+    | '/sales/documents'
+    | '/sales/followups'
+    | '/sales/messages'
+    | '/sales/my-requests'
+    | '/sales/profile'
+    | '/sales/quotes'
+    | '/sales/requests'
+    | '/sales/support'
+    | '/sales/yachts'
+    | '/customer/requests/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -159,13 +609,58 @@ export interface FileRouteTypes {
     | '/concierge'
     | '/destinations'
     | '/experiences'
+    | '/forgot-password'
+    | '/login'
     | '/membership'
     | '/mobility'
     | '/private'
+    | '/register'
     | '/request-access'
+    | '/reset-password'
     | '/residences'
     | '/subscriptions'
     | '/yachts'
+    | '/admin/aircraft'
+    | '/admin/analytics'
+    | '/admin/audit'
+    | '/admin/bookings'
+    | '/admin/content'
+    | '/admin/customers'
+    | '/admin/dashboard'
+    | '/admin/notifications'
+    | '/admin/operators'
+    | '/admin/pricing'
+    | '/admin/quotes'
+    | '/admin/requests'
+    | '/admin/sales-team'
+    | '/admin/settings'
+    | '/admin/support'
+    | '/admin/voice'
+    | '/admin/yachts'
+    | '/customer/bookings'
+    | '/customer/dashboard'
+    | '/customer/documents'
+    | '/customer/events'
+    | '/customer/notifications'
+    | '/customer/profile'
+    | '/customer/quotes'
+    | '/customer/requests'
+    | '/customer/subscriptions'
+    | '/customer/support'
+    | '/sales/aviation'
+    | '/sales/bookings'
+    | '/sales/customers'
+    | '/sales/dashboard'
+    | '/sales/documents'
+    | '/sales/followups'
+    | '/sales/messages'
+    | '/sales/my-requests'
+    | '/sales/profile'
+    | '/sales/quotes'
+    | '/sales/requests'
+    | '/sales/support'
+    | '/sales/yachts'
+    | '/customer/requests/new'
   id:
     | '__root__'
     | '/'
@@ -174,13 +669,58 @@ export interface FileRouteTypes {
     | '/concierge'
     | '/destinations'
     | '/experiences'
+    | '/forgot-password'
+    | '/login'
     | '/membership'
     | '/mobility'
     | '/private'
+    | '/register'
     | '/request-access'
+    | '/reset-password'
     | '/residences'
     | '/subscriptions'
     | '/yachts'
+    | '/admin/aircraft'
+    | '/admin/analytics'
+    | '/admin/audit'
+    | '/admin/bookings'
+    | '/admin/content'
+    | '/admin/customers'
+    | '/admin/dashboard'
+    | '/admin/notifications'
+    | '/admin/operators'
+    | '/admin/pricing'
+    | '/admin/quotes'
+    | '/admin/requests'
+    | '/admin/sales-team'
+    | '/admin/settings'
+    | '/admin/support'
+    | '/admin/voice'
+    | '/admin/yachts'
+    | '/customer/bookings'
+    | '/customer/dashboard'
+    | '/customer/documents'
+    | '/customer/events'
+    | '/customer/notifications'
+    | '/customer/profile'
+    | '/customer/quotes'
+    | '/customer/requests'
+    | '/customer/subscriptions'
+    | '/customer/support'
+    | '/sales/aviation'
+    | '/sales/bookings'
+    | '/sales/customers'
+    | '/sales/dashboard'
+    | '/sales/documents'
+    | '/sales/followups'
+    | '/sales/messages'
+    | '/sales/my-requests'
+    | '/sales/profile'
+    | '/sales/quotes'
+    | '/sales/requests'
+    | '/sales/support'
+    | '/sales/yachts'
+    | '/customer/requests/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -190,13 +730,57 @@ export interface RootRouteChildren {
   ConciergeRoute: typeof ConciergeRoute
   DestinationsRoute: typeof DestinationsRoute
   ExperiencesRoute: typeof ExperiencesRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  LoginRoute: typeof LoginRoute
   MembershipRoute: typeof MembershipRoute
   MobilityRoute: typeof MobilityRoute
   PrivateRoute: typeof PrivateRoute
+  RegisterRoute: typeof RegisterRoute
   RequestAccessRoute: typeof RequestAccessRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   ResidencesRoute: typeof ResidencesRoute
   SubscriptionsRoute: typeof SubscriptionsRoute
   YachtsRoute: typeof YachtsRoute
+  AdminAircraftRoute: typeof AdminAircraftRoute
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminAuditRoute: typeof AdminAuditRoute
+  AdminBookingsRoute: typeof AdminBookingsRoute
+  AdminContentRoute: typeof AdminContentRoute
+  AdminCustomersRoute: typeof AdminCustomersRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminNotificationsRoute: typeof AdminNotificationsRoute
+  AdminOperatorsRoute: typeof AdminOperatorsRoute
+  AdminPricingRoute: typeof AdminPricingRoute
+  AdminQuotesRoute: typeof AdminQuotesRoute
+  AdminRequestsRoute: typeof AdminRequestsRoute
+  AdminSalesTeamRoute: typeof AdminSalesTeamRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminSupportRoute: typeof AdminSupportRoute
+  AdminVoiceRoute: typeof AdminVoiceRoute
+  AdminYachtsRoute: typeof AdminYachtsRoute
+  CustomerBookingsRoute: typeof CustomerBookingsRoute
+  CustomerDashboardRoute: typeof CustomerDashboardRoute
+  CustomerDocumentsRoute: typeof CustomerDocumentsRoute
+  CustomerEventsRoute: typeof CustomerEventsRoute
+  CustomerNotificationsRoute: typeof CustomerNotificationsRoute
+  CustomerProfileRoute: typeof CustomerProfileRoute
+  CustomerQuotesRoute: typeof CustomerQuotesRoute
+  CustomerRequestsRoute: typeof CustomerRequestsRouteWithChildren
+  CustomerSubscriptionsRoute: typeof CustomerSubscriptionsRoute
+  CustomerSupportRoute: typeof CustomerSupportRoute
+  SalesAviationRoute: typeof SalesAviationRoute
+  SalesBookingsRoute: typeof SalesBookingsRoute
+  SalesCustomersRoute: typeof SalesCustomersRoute
+  SalesDashboardRoute: typeof SalesDashboardRoute
+  SalesDocumentsRoute: typeof SalesDocumentsRoute
+  SalesFollowupsRoute: typeof SalesFollowupsRoute
+  SalesMessagesRoute: typeof SalesMessagesRoute
+  SalesMyRequestsRoute: typeof SalesMyRequestsRoute
+  SalesProfileRoute: typeof SalesProfileRoute
+  SalesQuotesRoute: typeof SalesQuotesRoute
+  SalesRequestsRoute: typeof SalesRequestsRoute
+  SalesSupportRoute: typeof SalesSupportRoute
+  SalesYachtsRoute: typeof SalesYachtsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -243,6 +827,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ExperiencesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/membership': {
       id: '/membership'
       path: '/membership'
@@ -264,11 +862,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/request-access': {
       id: '/request-access'
       path: '/request-access'
       fullPath: '/request-access'
       preLoaderRoute: typeof RequestAccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/residences': {
@@ -292,8 +904,306 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof YachtsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/aircraft': {
+      id: '/admin/aircraft'
+      path: '/admin/aircraft'
+      fullPath: '/admin/aircraft'
+      preLoaderRoute: typeof AdminAircraftRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/admin/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/audit': {
+      id: '/admin/audit'
+      path: '/admin/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AdminAuditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/bookings': {
+      id: '/admin/bookings'
+      path: '/admin/bookings'
+      fullPath: '/admin/bookings'
+      preLoaderRoute: typeof AdminBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/content': {
+      id: '/admin/content'
+      path: '/admin/content'
+      fullPath: '/admin/content'
+      preLoaderRoute: typeof AdminContentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/customers': {
+      id: '/admin/customers'
+      path: '/admin/customers'
+      fullPath: '/admin/customers'
+      preLoaderRoute: typeof AdminCustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/notifications': {
+      id: '/admin/notifications'
+      path: '/admin/notifications'
+      fullPath: '/admin/notifications'
+      preLoaderRoute: typeof AdminNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/operators': {
+      id: '/admin/operators'
+      path: '/admin/operators'
+      fullPath: '/admin/operators'
+      preLoaderRoute: typeof AdminOperatorsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/pricing': {
+      id: '/admin/pricing'
+      path: '/admin/pricing'
+      fullPath: '/admin/pricing'
+      preLoaderRoute: typeof AdminPricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/quotes': {
+      id: '/admin/quotes'
+      path: '/admin/quotes'
+      fullPath: '/admin/quotes'
+      preLoaderRoute: typeof AdminQuotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/requests': {
+      id: '/admin/requests'
+      path: '/admin/requests'
+      fullPath: '/admin/requests'
+      preLoaderRoute: typeof AdminRequestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/sales-team': {
+      id: '/admin/sales-team'
+      path: '/admin/sales-team'
+      fullPath: '/admin/sales-team'
+      preLoaderRoute: typeof AdminSalesTeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/support': {
+      id: '/admin/support'
+      path: '/admin/support'
+      fullPath: '/admin/support'
+      preLoaderRoute: typeof AdminSupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/voice': {
+      id: '/admin/voice'
+      path: '/admin/voice'
+      fullPath: '/admin/voice'
+      preLoaderRoute: typeof AdminVoiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/yachts': {
+      id: '/admin/yachts'
+      path: '/admin/yachts'
+      fullPath: '/admin/yachts'
+      preLoaderRoute: typeof AdminYachtsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/bookings': {
+      id: '/customer/bookings'
+      path: '/customer/bookings'
+      fullPath: '/customer/bookings'
+      preLoaderRoute: typeof CustomerBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/dashboard': {
+      id: '/customer/dashboard'
+      path: '/customer/dashboard'
+      fullPath: '/customer/dashboard'
+      preLoaderRoute: typeof CustomerDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/documents': {
+      id: '/customer/documents'
+      path: '/customer/documents'
+      fullPath: '/customer/documents'
+      preLoaderRoute: typeof CustomerDocumentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/events': {
+      id: '/customer/events'
+      path: '/customer/events'
+      fullPath: '/customer/events'
+      preLoaderRoute: typeof CustomerEventsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/notifications': {
+      id: '/customer/notifications'
+      path: '/customer/notifications'
+      fullPath: '/customer/notifications'
+      preLoaderRoute: typeof CustomerNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/profile': {
+      id: '/customer/profile'
+      path: '/customer/profile'
+      fullPath: '/customer/profile'
+      preLoaderRoute: typeof CustomerProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/quotes': {
+      id: '/customer/quotes'
+      path: '/customer/quotes'
+      fullPath: '/customer/quotes'
+      preLoaderRoute: typeof CustomerQuotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/requests': {
+      id: '/customer/requests'
+      path: '/customer/requests'
+      fullPath: '/customer/requests'
+      preLoaderRoute: typeof CustomerRequestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/subscriptions': {
+      id: '/customer/subscriptions'
+      path: '/customer/subscriptions'
+      fullPath: '/customer/subscriptions'
+      preLoaderRoute: typeof CustomerSubscriptionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/support': {
+      id: '/customer/support'
+      path: '/customer/support'
+      fullPath: '/customer/support'
+      preLoaderRoute: typeof CustomerSupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/aviation': {
+      id: '/sales/aviation'
+      path: '/sales/aviation'
+      fullPath: '/sales/aviation'
+      preLoaderRoute: typeof SalesAviationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/bookings': {
+      id: '/sales/bookings'
+      path: '/sales/bookings'
+      fullPath: '/sales/bookings'
+      preLoaderRoute: typeof SalesBookingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/customers': {
+      id: '/sales/customers'
+      path: '/sales/customers'
+      fullPath: '/sales/customers'
+      preLoaderRoute: typeof SalesCustomersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/dashboard': {
+      id: '/sales/dashboard'
+      path: '/sales/dashboard'
+      fullPath: '/sales/dashboard'
+      preLoaderRoute: typeof SalesDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/documents': {
+      id: '/sales/documents'
+      path: '/sales/documents'
+      fullPath: '/sales/documents'
+      preLoaderRoute: typeof SalesDocumentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/followups': {
+      id: '/sales/followups'
+      path: '/sales/followups'
+      fullPath: '/sales/followups'
+      preLoaderRoute: typeof SalesFollowupsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/messages': {
+      id: '/sales/messages'
+      path: '/sales/messages'
+      fullPath: '/sales/messages'
+      preLoaderRoute: typeof SalesMessagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/my-requests': {
+      id: '/sales/my-requests'
+      path: '/sales/my-requests'
+      fullPath: '/sales/my-requests'
+      preLoaderRoute: typeof SalesMyRequestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/profile': {
+      id: '/sales/profile'
+      path: '/sales/profile'
+      fullPath: '/sales/profile'
+      preLoaderRoute: typeof SalesProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/quotes': {
+      id: '/sales/quotes'
+      path: '/sales/quotes'
+      fullPath: '/sales/quotes'
+      preLoaderRoute: typeof SalesQuotesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/requests': {
+      id: '/sales/requests'
+      path: '/sales/requests'
+      fullPath: '/sales/requests'
+      preLoaderRoute: typeof SalesRequestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/support': {
+      id: '/sales/support'
+      path: '/sales/support'
+      fullPath: '/sales/support'
+      preLoaderRoute: typeof SalesSupportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sales/yachts': {
+      id: '/sales/yachts'
+      path: '/sales/yachts'
+      fullPath: '/sales/yachts'
+      preLoaderRoute: typeof SalesYachtsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/customer/requests/new': {
+      id: '/customer/requests/new'
+      path: '/new'
+      fullPath: '/customer/requests/new'
+      preLoaderRoute: typeof CustomerRequestsNewRouteImport
+      parentRoute: typeof CustomerRequestsRoute
+    }
   }
 }
+
+interface CustomerRequestsRouteChildren {
+  CustomerRequestsNewRoute: typeof CustomerRequestsNewRoute
+}
+
+const CustomerRequestsRouteChildren: CustomerRequestsRouteChildren = {
+  CustomerRequestsNewRoute: CustomerRequestsNewRoute,
+}
+
+const CustomerRequestsRouteWithChildren =
+  CustomerRequestsRoute._addFileChildren(CustomerRequestsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -302,13 +1212,57 @@ const rootRouteChildren: RootRouteChildren = {
   ConciergeRoute: ConciergeRoute,
   DestinationsRoute: DestinationsRoute,
   ExperiencesRoute: ExperiencesRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  LoginRoute: LoginRoute,
   MembershipRoute: MembershipRoute,
   MobilityRoute: MobilityRoute,
   PrivateRoute: PrivateRoute,
+  RegisterRoute: RegisterRoute,
   RequestAccessRoute: RequestAccessRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   ResidencesRoute: ResidencesRoute,
   SubscriptionsRoute: SubscriptionsRoute,
   YachtsRoute: YachtsRoute,
+  AdminAircraftRoute: AdminAircraftRoute,
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminAuditRoute: AdminAuditRoute,
+  AdminBookingsRoute: AdminBookingsRoute,
+  AdminContentRoute: AdminContentRoute,
+  AdminCustomersRoute: AdminCustomersRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
+  AdminNotificationsRoute: AdminNotificationsRoute,
+  AdminOperatorsRoute: AdminOperatorsRoute,
+  AdminPricingRoute: AdminPricingRoute,
+  AdminQuotesRoute: AdminQuotesRoute,
+  AdminRequestsRoute: AdminRequestsRoute,
+  AdminSalesTeamRoute: AdminSalesTeamRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminSupportRoute: AdminSupportRoute,
+  AdminVoiceRoute: AdminVoiceRoute,
+  AdminYachtsRoute: AdminYachtsRoute,
+  CustomerBookingsRoute: CustomerBookingsRoute,
+  CustomerDashboardRoute: CustomerDashboardRoute,
+  CustomerDocumentsRoute: CustomerDocumentsRoute,
+  CustomerEventsRoute: CustomerEventsRoute,
+  CustomerNotificationsRoute: CustomerNotificationsRoute,
+  CustomerProfileRoute: CustomerProfileRoute,
+  CustomerQuotesRoute: CustomerQuotesRoute,
+  CustomerRequestsRoute: CustomerRequestsRouteWithChildren,
+  CustomerSubscriptionsRoute: CustomerSubscriptionsRoute,
+  CustomerSupportRoute: CustomerSupportRoute,
+  SalesAviationRoute: SalesAviationRoute,
+  SalesBookingsRoute: SalesBookingsRoute,
+  SalesCustomersRoute: SalesCustomersRoute,
+  SalesDashboardRoute: SalesDashboardRoute,
+  SalesDocumentsRoute: SalesDocumentsRoute,
+  SalesFollowupsRoute: SalesFollowupsRoute,
+  SalesMessagesRoute: SalesMessagesRoute,
+  SalesMyRequestsRoute: SalesMyRequestsRoute,
+  SalesProfileRoute: SalesProfileRoute,
+  SalesQuotesRoute: SalesQuotesRoute,
+  SalesRequestsRoute: SalesRequestsRoute,
+  SalesSupportRoute: SalesSupportRoute,
+  SalesYachtsRoute: SalesYachtsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

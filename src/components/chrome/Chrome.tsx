@@ -2,17 +2,23 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { motion, useScroll, useSpring } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
 import { brand } from "@/content/site";
+import { useAuth } from "@/lib/auth";
 import { NavigationOverlay } from "./NavigationOverlay";
 
-/** Minimal chrome: HJ mark, the word MENU, and a hairline reading-progress rule. */
+const roleDashboard = { ADMIN: "/admin/dashboard", SALES: "/sales/dashboard", CUSTOMER: "/customer/dashboard" } as const;
+
 export function Chrome() {
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 80, damping: 30 });
   const close = useCallback(() => setOpen(false), []);
+  const { role, isLoading } = useAuth();
 
   useEffect(() => setOpen(false), [pathname]);
+
+  const dashboardTo = role ? roleDashboard[role] : "/login";
+  const dashboardLabel = role === "ADMIN" ? "Admin" : role === "SALES" ? "Sales" : role === "CUSTOMER" ? "Dashboard" : null;
 
   return (
     <>
@@ -30,6 +36,25 @@ export function Chrome() {
             <span className="h-2 w-2 rounded-full border border-current" aria-hidden="true" />
             <span>Voice</span>
           </button>
+
+          {!isLoading && (
+            dashboardLabel ? (
+              <Link
+                to={dashboardTo}
+                className="whisper flex items-center gap-2 text-ivory/80 transition-colors hover:text-champagne"
+              >
+                {dashboardLabel}
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="whisper flex items-center gap-2 text-ivory/80 transition-colors hover:text-champagne"
+              >
+                Login
+              </Link>
+            )
+          )}
+
           <button
             type="button"
             onClick={() => setOpen(true)}

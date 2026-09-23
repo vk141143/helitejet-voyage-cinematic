@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CinematicPage, worldHead } from "@/components/scene/CinematicPage";
 import { worlds } from "@/content/site";
-import { RequestAccessForm } from "@/components/forms/RequestAccessForm";
+import { PublicRequestWizard } from "@/components/inquiry/PublicRequestWizard";
 const world = worlds.access;
 
 export const Route = createFileRoute("/request-access")({
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/request-access")({
 function Page() {
   return (
     <CinematicPage world={world}>
-      <RequestAccessForm />
+      <PublicRequestWizard />
     </CinematicPage>
   );
 }
